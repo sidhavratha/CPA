@@ -1,0 +1,54 @@
+<aspectj>
+
+    <aspects>
+        <!-- declare two existing aspects to the weaver -->
+        <aspect name="com.cpa.CpaAspect"/>
+
+        <!-- define a concrete aspect inline -->
+        <!--<concrete-aspect name="com.xyz.tracing.MyTracing"
+                         extends="tracing.AbstractTracing"
+                         precedence="com.xyz.first, *">
+            <pointcut name="tracingScope" expression="within(org.maw.*)"/>
+        </concrete-aspect>-->
+
+        <!-- Of the set of aspects declared to the weaver
+             use aspects matching the type pattern "com..*" for weaving. -->
+        <!--<include within="com..*"/>-->
+
+        <!-- Of the set of aspects declared to the weaver
+             do not use any aspects with the @ExcludeAspect annotation for weaving -->
+    </aspects>
+
+    <weaver options="-XaddSerialVersionUID -verbose -showWeaveInfo">
+        <include within="*" />
+        <exclude within="java..*" />
+        <include within="java.net.Socket" />
+        <include within="java.net.ServerSocket" />
+        <exclude within="javax..*" />
+        <exclude within="org.aspectj..*" />
+        <exclude within="org.junit..*" />
+        <exclude within="*..intellij..*" />
+    </weaver>
+
+    <!--<weaver options="-verbose">
+        &lt;!&ndash; Weave types that are within the javax.* or org.aspectj.*
+             packages. Also weave all types in the foo package that do
+             not have the @NoWeave annotation. &ndash;&gt;
+        <include within="javax.*"/>
+        <include within="org.aspectj.*"/>
+        <include within="com.*"/>
+
+        &lt;!&ndash; Do not weave types within the "bar" pakage &ndash;&gt;
+        <exclude within="bar.*"/>
+
+        &lt;!&ndash; Dump all types within the "com.foo.bar" package
+             to the "./_ajdump" folder on disk (for diagnostic purposes) &ndash;&gt;
+        <dump within="com.foo.bar.*"/>
+
+        &lt;!&ndash; Dump all types within the "com.foo.bar" package and sub-packages,
+             both before are after they are woven,
+             which can be used for byte-code generated at runtime
+        <dump within="com.foo.bar..*" beforeandafter="true"/> &ndash;&gt;
+      </weaver>-->
+
+</aspectj>
